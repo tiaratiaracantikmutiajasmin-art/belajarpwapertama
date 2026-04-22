@@ -7,585 +7,781 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#6366f1" />
-    <link rel="icon" href="icons/icon-192x192-A.png" type="image/png" />
-    <link rel="manifest" href="manifest.json">
-    <title>TaskFlow - Kelola Tugas Anda</title>
+    <meta name="theme-color" content="#0d6efd" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" type="image/png" />
+    
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Google Font Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <title>Notion Flow - Kelola Hidup Anda</title>
+
     <style>
+        :root {
+            --primary: #0d6efd;
+            --primary-dark: #0a58ca;
+            --primary-light: #e7f1ff;
+            --bg-body: #f4f7fe;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: #818cf8;
-            --bg-dark: #ffffff;
-            --bg-card: #1e293b;
-            --text-light: #f8fafc;
-            --text-gray: #cbd5e1;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --warning: #f59e0b;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, var(--bg-dark) 0%, #1856bb 100%);
-            color: var(--text-light);
+            background-color: var(--bg-body);
+            color: var(--text-dark);
             min-height: 100vh;
-            padding-bottom: 80px;
         }
 
-        .header {
-            background: #1856bb;
-            backdrop-filter: blur(10px);
+        /* --- AUTH SECTION --- */
+        #authSection {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #1856bb 100%);
             padding: 20px;
+        }
+
+        .auth-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- APP SECTION --- */
+        .header {
+            background: white;
+            padding: 15px 0;
             position: sticky;
             top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .logo-brand {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
         }
 
-        .logo {
+        .sidebar-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            height: fit-content;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .nav-link-custom {
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
-        }
-
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .stats {
-            display: flex;
-            gap: 16px;
-            font-size: 14px;
+            padding: 12px 15px;
             color: var(--text-gray);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.3s;
+            margin-bottom: 5px;
         }
 
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .nav-link-custom:hover, .nav-link-custom.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
         }
 
-        .stat-number {
-            color: var(--primary-light);
-            font-weight: 700;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 24px 20px;
-        }
-
-        .input-section {
-            background: var(--bg-card);
-            padding: 24px;
+        .card-notion {
+            background: white;
+            border: none;
             border-radius: 16px;
-            margin-bottom: 24px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(99, 102, 241, 0.1);
-        }
-
-        .input-group {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 14px 18px;
-            background: var(--bg-dark);
-            border: 2px solid rgba(99, 102, 241, 0.3);
-            border-radius: 12px;
-            color: var(--text-light);
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .priority-selector {
-            display: flex;
-            gap: 8px;
-        }
-
-        .priority-btn {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background: transparent;
-            color: var(--text-gray);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-
-        .priority-btn.active {
-            border-color: currentColor;
-            background: rgba(255, 255, 255, 0.1);
-            font-weight: 600;
-        }
-
-        .priority-btn.high {
-            color: var(--danger);
-        }
-
-        .priority-btn.medium {
-            color: var(--warning);
-        }
-
-        .priority-btn.low {
-            color: var(--success);
-        }
-
-        .filter-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
-
-        .filter-tab {
-            padding: 10px 20px;
-            background: var(--bg-card);
-            border: 2px solid transparent;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            font-size: 14px;
-            font-weight: 500;
-            color: #ffffff;
-        }
-
-        .filter-tab.active {
-            background: var(--primary);
-            border-color: var(--primary-light);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        .tasks-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .task-item {
-            background: var(--bg-card);
             padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: all 0.3s ease;
-            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            transition: 0.3s;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .card-notion:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
-        .task-item:hover {
-            transform: translateX(4px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .task-item.high {
-            border-left-color: var(--danger);
-        }
-
-        .task-item.medium {
-            border-left-color: var(--warning);
-        }
-
-        .task-item.low {
-            border-left-color: var(--success);
-        }
-
-        .task-checkbox {
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--primary);
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-        }
-
-        .task-checkbox:hover {
-            background: rgba(99, 102, 241, 0.1);
-        }
-
-        .task-checkbox.checked {
-            background: var(--primary);
-        }
-
-        .task-content {
-            flex: 1;
-        }
-
-        .task-text {
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-
-        .task-text.completed {
-            text-decoration: line-through;
-            opacity: 0.6;
-        }
-
-        .task-meta {
-            display: flex;
-            gap: 12px;
-            font-size: 12px;
-            color: var(--text-gray);
-        }
-
-        .task-time {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .task-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-icon {
-            width: 36px;
-            height: 36px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 18px;
-        }
-
-        .btn-delete {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-
-        .btn-delete:hover {
-            background: var(--danger);
-            color: white;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-gray);
-        }
-
-        .empty-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        .progress-bar {
-            background: var(--bg-card);
+        /* Progress Bar */
+        .progress-container {
             height: 8px;
-            border-radius: 4px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin: 15px 0;
             overflow: hidden;
-            margin: 16px 0;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            background: var(--primary);
             transition: width 0.5s ease;
-            border-radius: 4px;
         }
 
-        @media (max-width: 640px) {
-            .header-content {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .input-group {
-                flex-direction: column;
-            }
-
-            .stats {
-                width: 100%;
-                justify-content: space-around;
-            }
+        /* Habit Tracker */
+        .habit-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
         }
 
-        .logo h1 {
-            font-size: 50px;
-            font-weight: 800;
+        .habit-check {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .habit-check.done {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Task Priority Colors */
+        .prio-high { border-left: 5px solid var(--danger); }
+        .prio-medium { border-left: 5px solid var(--warning); }
+        .prio-low { border-left: 5px solid var(--success); }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .sidebar-nav { margin-bottom: 20px; }
+            .header-content { text-align: center; }
         }
     </style>
 </head>
 
 <body>
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">✓</div>
-                <h1 class="text-judul">TaskFlow</h1>
+
+    <!-- SECTION 1: AUTHENTICATION (LOGIN/REGISTER) -->
+    <div id="authSection">
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-card">
+            <h3 class="fw-bold text-center mb-1">Notion Flow</h3>
+            <p class="text-muted text-center mb-4">Masuk untuk mengelola tugasmu</p>
+            
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Email</label>
+                <input type="email" id="loginEmail" class="form-control" placeholder="nama@email.com">
             </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <span>📝</span>
-                    <span>Total: <span class="stat-number" id="totalTasks">0</span></span>
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Password</label>
+                <input type="password" id="loginPassword" class="form-control" placeholder="Min. 6 karakter">
+            </div>
+            <div class="d-flex justify-content-between mb-4">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label small" for="rememberMe">Ingat Saya</label>
                 </div>
-                <div class="stat-item">
-                    <span>✅</span>
-                    <span>Selesai: <span class="stat-number" id="completedTasks">0</span></span>
-                </div>
+                <a href="#" onclick="forgotPassword()" class="small text-decoration-none">Lupa Password?</a>
             </div>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="input-section">
-            <div class="input-group">
-                <input type="text" id="taskInput" placeholder="Tambahkan tugas baru..."
-                    onkeypress="if(event.key==='Enter') addTask()" />
-                <button class="btn btn-primary" onclick="addTask()">
-                    <span>➕</span>
-                    <span>Tambah</span>
-                </button>
-            </div>
-            <div class="priority-selector">
-                <button class="priority-btn high" onclick="setPriority('high')">🔴 Tinggi</button>
-                <button class="priority-btn medium active" onclick="setPriority('medium')">🟡 Sedang</button>
-                <button class="priority-btn low" onclick="setPriority('low')">🟢 Rendah</button>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
-            </div>
+            <button class="btn btn-primary w-100 mb-3" onclick="handleLogin()">Login</button>
+            <p class="text-center small mb-0">Belum punya akun? <a href="#" onclick="toggleAuth(true)" class="text-decoration-none fw-bold">Daftar Sekarang</a></p>
         </div>
 
-        <div class="filter-tabs">
-            <button class="filter-tab active" onclick="filterTasks('all')">Semua</button>
-            <button class="filter-tab" onclick="filterTasks('active')">Aktif</button>
-            <button class="filter-tab" onclick="filterTasks('completed')">Selesai</button>
-            <button class="filter-tab" onclick="filterTasks('high')">🔴 Prioritas Tinggi</button>
-            <button class="filter-tab" onclick="filterTasks('medium')">🟡 Prioritas Sedang</button>
-            <button class="filter-tab" onclick="filterTasks('low')">🟢 Prioritas Rendah</button>
+        <!-- Register Form -->
+        <div id="registerForm" class="auth-card" style="display: none;">
+            <h3 class="fw-bold text-center mb-1">Daftar Akun</h3>
+            <p class="text-muted text-center mb-4">Mulai hidup terstruktur hari ini</p>
+            
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Nama Lengkap</label>
+                <input type="text" id="regName" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Email</label>
+                <input type="email" id="regEmail" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Password</label>
+                <input type="password" id="regPassword" class="form-control">
+            </div>
+            <button class="btn btn-primary w-100 mb-3" onclick="handleRegister()">Daftar</button>
+            <p class="text-center small mb-0">Sudah punya akun? <a href="#" onclick="toggleAuth(false)" class="text-decoration-none fw-bold">Login</a></p>
         </div>
-
-        <div class="tasks-list" id="tasksList"></div>
     </div>
 
-    <script>
-        let tasks = [];
-        let currentPriority = 'medium';
-        let currentFilter = 'all';
+    <!-- SECTION 2: MAIN APP -->
+    <div id="appSection" style="display: none;">
+        <header class="header">
+            <div class="container d-flex justify-content-between align-items-center">
+                <a href="#" class="logo-brand">
+                    <i class="bi bi- cursor-fill"></i> NotionFlow
+                </a>
+                <div class="dropdown">
+                    <div class="d-flex align-items-center gap-2 cursor-pointer" data-bs-toggle="dropdown" style="cursor:pointer">
+                        <span id="navUserName" class="fw-bold">User</span>
+                        <img src="https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff" id="userAvatar" class="rounded-circle" width="35">
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li><a class="dropdown-item" href="#" onclick="showPage('profile')"><i class="bi bi-person me-2"></i>Profil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" onclick="handleLogout()"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
 
-        function loadTasks() {
-            const saved = localStorage.getItem('taskflow_tasks');
-            if (saved) {
-                tasks = JSON.parse(saved);
-                renderTasks();
+        <div class="container mt-4">
+            <div class="row">
+                <!-- Sidebar Nav -->
+                <div class="col-lg-3">
+                    <nav class="sidebar-nav mb-4">
+                        <a href="#" class="nav-link-custom active" onclick="showPage('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                        <a href="#" class="nav-link-custom" onclick="showPage('tasks')"><i class="bi bi-check2-square"></i> Tugas & Deadline</a>
+                        <a href="#" class="nav-link-custom" onclick="showPage('habits')"><i class="bi bi-calendar-check"></i> Habit Tracker</a>
+                        <a href="#" class="nav-link-custom" onclick="showPage('notes')"><i class="bi bi-journal-text"></i> Catatan Materi</a>
+                        <a href="#" class="nav-link-custom" onclick="showPage('schedule')"><i class="bi bi-clock-history"></i> Jadwal Belajar</a>
+                    </nav>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-lg-9">
+                    
+                    <!-- Dashboard Page -->
+                    <div id="page-dashboard" class="page-content">
+                        <h4 class="fw-bold mb-4">Ringkasan Hari Ini</h4>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="card-notion">
+                                    <h6 class="text-muted">Progres Tugas Selesai</h6>
+                                    <h2 id="statsTaskPct" class="fw-bold">0%</h2>
+                                    <div class="progress-container">
+                                        <div id="statsTaskBar" class="progress-fill" style="width: 0%"></div>
+                                    </div>
+                                    <small id="statsTaskCount">0 dari 0 tugas selesai</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-notion">
+                                    <h6 class="text-muted">Habit Hari Ini</h6>
+                                    <h2 id="statsHabitCount" class="fw-bold">0</h2>
+                                    <p class="mb-0 small">Kebiasaan yang sudah dilakukan</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-notion mt-4">
+                            <h5 class="fw-bold mb-3">Tugas Prioritas</h5>
+                            <div id="dashboardTaskNotice"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tasks Page -->
+                    <div id="page-tasks" class="page-content" style="display:none">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="fw-bold">Tugas & Deadline</h4>
+                            <button class="btn btn-primary btn-sm" onclick="openTaskModal()"><i class="bi bi-plus-lg"></i> Tambah</button>
+                        </div>
+                        <div id="taskList"></div>
+                    </div>
+
+                    <!-- Habit Tracker Page -->
+                    <div id="page-habits" class="page-content" style="display:none">
+                        <h4 class="fw-bold mb-4">Habit Tracker</h4>
+                        <div class="card-notion">
+                            <div class="input-group mb-4">
+                                <input type="text" id="habitInput" class="form-control" placeholder="Kebiasaan baru...">
+                                <button class="btn btn-primary" onclick="addHabit()">Tambah</button>
+                            </div>
+                            <div id="habitList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Notes Page -->
+                    <div id="page-notes" class="page-content" style="display:none">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="fw-bold">Catatan Materi</h4>
+                            <button class="btn btn-primary btn-sm" onclick="addNote()"><i class="bi bi-plus-lg"></i> Catatan Baru</button>
+                        </div>
+                        <div id="noteList" class="row g-3"></div>
+                    </div>
+
+                    <!-- Schedule Page -->
+                    <div id="page-schedule" class="page-content" style="display:none">
+                        <h4 class="fw-bold mb-4">Jadwal Belajar</h4>
+                        <div class="card-notion">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Waktu</th>
+                                            <th>Materi / Mata Kuliah</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="scheduleTable"></tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm w-100" onclick="addSchedule()">+ Tambah Jadwal</button>
+                        </div>
+                    </div>
+
+                    <!-- Profile Page -->
+                    <div id="page-profile" class="page-content" style="display:none">
+                        <h4 class="fw-bold mb-4">Edit Profil</h4>
+                        <div class="card-notion" style="max-width: 500px;">
+                            <div class="mb-3">
+                                <label class="form-label">Nama Lengkap</label>
+                                <input type="text" id="profName" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" id="profEmail" class="form-control" readonly>
+                            </div>
+                            <button class="btn btn-primary" onclick="updateProfile()">Simpan Perubahan</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD TASK -->
+    <div class="modal fade" id="taskModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-4 border-0">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Tugas Baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Judul Tugas</label>
+                        <input type="text" id="taskTitle" class="form-control" placeholder="Selesaikan laporan...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Deadline</label>
+                        <input type="date" id="taskDate" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Prioritas</label>
+                        <select id="taskPrio" class="form-select">
+                            <option value="high">🔴 Tinggi</option>
+                            <option value="medium" selected>🟡 Sedang</option>
+                            <option value="low">🟢 Rendah</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                    <button class="btn btn-primary" onclick="saveTask()">Simpan Tugas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        /** --- GLOBAL STATE & STORAGE --- **/
+        let users = JSON.parse(localStorage.getItem('nf_users')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('nf_session')) || null;
+        
+        // Data Arrays
+        let tasks = JSON.parse(localStorage.getItem('nf_tasks')) || [];
+        let habits = JSON.parse(localStorage.getItem('nf_habits')) || [];
+        let notes = JSON.parse(localStorage.getItem('nf_notes')) || [];
+        let schedule = JSON.parse(localStorage.getItem('nf_schedule')) || [];
+
+        const taskModal = new bootstrap.Modal(document.getElementById('taskModal'));
+
+        /** --- AUTHENTICATION LOGIC --- **/
+        function toggleAuth(showRegister) {
+            document.getElementById('loginForm').style.display = showRegister ? 'none' : 'block';
+            document.getElementById('registerForm').style.display = showRegister ? 'block' : 'none';
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+
+            if (!name || !email || password.length < 6) {
+                return Swal.fire('Error', 'Lengkapi data. Password minimal 6 karakter.', 'error');
+            }
+
+            if (users.find(u => u.email === email)) {
+                return Swal.fire('Error', 'Email sudah terdaftar!', 'error');
+            }
+
+            users.push({ name, email, password });
+            localStorage.setItem('nf_users', JSON.stringify(users));
+            Swal.fire('Berhasil!', 'Akun terdaftar, silakan login.', 'success');
+            toggleAuth(false);
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const remember = document.getElementById('rememberMe').checked;
+
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('nf_session', JSON.stringify(user));
+                if (remember) localStorage.setItem('nf_remember', email);
+                initApp();
+            } else {
+                Swal.fire('Gagal', 'Email atau password salah!', 'error');
             }
         }
 
-        function saveTasks() {
-            localStorage.setItem('taskflow_tasks', JSON.stringify(tasks));
+        function handleLogout() {
+            localStorage.removeItem('nf_session');
+            localStorage.removeItem('nf_remember');
+            location.reload();
         }
 
-        function setPriority(priority) {
-            currentPriority = priority;
-            document.querySelectorAll('.priority-btn').forEach(btn => {
-                btn.classList.remove('active');
+        function forgotPassword() {
+            Swal.fire({
+                title: 'Lupa Password',
+                input: 'email',
+                inputLabel: 'Masukkan email Anda',
+                showCancelButton: true
+            }).then((result) => {
+                if (result.value) {
+                    const user = users.find(u => u.email === result.value);
+                    if (user) Swal.fire('Info', `Password Anda: ${user.password}`, 'info');
+                    else Swal.fire('Error', 'Email tidak ditemukan', 'error');
+                }
             });
-            event.target.classList.add('active');
         }
 
-        function addTask() {
-            const input = document.getElementById('taskInput');
-            const text = input.value.trim();
+        /** --- APP LOGIC --- **/
+        function initApp() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('appSection').style.display = 'block';
+            document.getElementById('navUserName').textContent = currentUser.name;
+            document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${currentUser.name}&background=0d6efd&color=fff`;
+            document.getElementById('profName').value = currentUser.name;
+            document.getElementById('profEmail').value = currentUser.email;
+            
+            renderAll();
+        }
 
-            if (text === '') return;
+        function showPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
+            document.getElementById(`page-${pageId}`).style.display = 'block';
+            
+            document.querySelectorAll('.nav-link-custom').forEach(l => l.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
 
-            const task = {
+        // --- TASKS ---
+        function openTaskModal() {
+            document.getElementById('taskTitle').value = '';
+            taskModal.show();
+        }
+
+        function saveTask() {
+            const title = document.getElementById('taskTitle').value;
+            const date = document.getElementById('taskDate').value;
+            const prio = document.getElementById('taskPrio').value;
+
+            if (!title) return;
+
+            tasks.push({
                 id: Date.now(),
-                text: text,
-                completed: false,
-                priority: currentPriority,
-                createdAt: new Date().toLocaleString('id-ID')
-            };
+                userEmail: currentUser.email,
+                title, date, prio, completed: false
+            });
 
-            tasks.unshift(task);
-            input.value = '';
-            saveTasks();
+            localStorage.setItem('nf_tasks', JSON.stringify(tasks));
+            taskModal.hide();
             renderTasks();
+            updateStats();
         }
 
         function toggleTask(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.completed = !task.completed;
-                saveTasks();
-                renderTasks();
-            }
+            tasks = tasks.map(t => t.id === id ? {...t, completed: !t.completed} : t);
+            localStorage.setItem('nf_tasks', JSON.stringify(tasks));
+            renderTasks();
+            updateStats();
         }
 
         function deleteTask(id) {
             tasks = tasks.filter(t => t.id !== id);
-            saveTasks();
+            localStorage.setItem('nf_tasks', JSON.stringify(tasks));
             renderTasks();
-        }
-
-        function filterTasks(filter) {
-            currentFilter = filter;
-            document.querySelectorAll('.filter-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            renderTasks();
-        }
-
-        function renderTasks() {
-            const container = document.getElementById('tasksList');
-
-            let filteredTasks = tasks;
-
-            if (currentFilter === 'active') {
-                filteredTasks = tasks.filter(t => !t.completed);
-            } else if (currentFilter === 'completed') {
-                filteredTasks = tasks.filter(t => t.completed);
-            } else if (['high', 'medium', 'low'].includes(currentFilter)) {
-                filteredTasks = tasks.filter(t => t.priority === currentFilter);
-            }
-
-            if (filteredTasks.length === 0) {
-                container.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">📋</div>
-            <h3>Tidak ada tugas</h3>
-            <p>Mulai tambahkan tugas baru untuk memulai!</p>
-          </div>
-        `;
-            } else {
-                container.innerHTML = filteredTasks.map(task => `
-          <div class="task-item ${task.priority}">
-            <div class="task-checkbox ${task.completed ? 'checked' : ''}" onclick="toggleTask(${task.id})">
-              ${task.completed ? '✓' : ''}
-            </div>
-            <div class="task-content">
-              <div class="task-text ${task.completed ? 'completed' : ''}">${task.text}</div>
-              <div class="task-meta">
-                <span class="task-time">🕒 ${task.createdAt}</span>
-                <span>📌 ${task.priority === 'high' ? 'Tinggi' : task.priority === 'medium' ? 'Sedang' : 'Rendah'}</span>
-              </div>
-            </div>
-            <div class="task-actions">
-              <button class="btn-icon btn-delete" onclick="deleteTask(${task.id})">🗑️</button>
-            </div>
-          </div>
-        `).join('');
-            }
-
             updateStats();
         }
 
-        function updateStats() {
-            const total = tasks.length;
-            const completed = tasks.filter(t => t.completed).length;
-            const progress = total > 0 ? (completed / total) * 100 : 0;
+        function renderTasks() {
+            const list = document.getElementById('taskList');
+            const userTasks = tasks.filter(t => t.userEmail === currentUser.email);
+            
+            if (userTasks.length === 0) {
+                list.innerHTML = `<div class="text-center p-5 text-muted">Belum ada tugas.</div>`;
+                return;
+            }
 
-            document.getElementById('totalTasks').textContent = total;
-            document.getElementById('completedTasks').textContent = completed;
-            document.getElementById('progressBar').style.width = progress + '%';
+            list.innerHTML = userTasks.map(t => `
+                <div class="card-notion prio-${t.prio} d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1 ${t.completed ? 'text-decoration-line-through text-muted' : ''}">${t.title}</h6>
+                        <small class="text-muted"><i class="bi bi-calendar"></i> ${t.date || 'Tanpa Deadline'}</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm ${t.completed ? 'btn-success' : 'btn-outline-success'}" onclick="toggleTask(${t.id})">
+                            <i class="bi bi-check-lg"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteTask(${t.id})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        loadTasks();
+        // --- HABITS ---
+        function addHabit() {
+            const text = document.getElementById('habitInput').value;
+            if (!text) return;
 
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then(() => console.log('Service Worker registered'))
-                    .catch(err => console.error('Service Worker error:', err));
+            habits.push({
+                id: Date.now(),
+                userEmail: currentUser.email,
+                text,
+                lastDone: null
+            });
+
+            localStorage.setItem('nf_habits', JSON.stringify(habits));
+            document.getElementById('habitInput').value = '';
+            renderHabits();
+            updateStats();
+        }
+
+        function toggleHabit(id) {
+            const today = new Date().toDateString();
+            habits = habits.map(h => {
+                if (h.id === id) {
+                    h.lastDone = (h.lastDone === today) ? null : today;
+                }
+                return h;
+            });
+            localStorage.setItem('nf_habits', JSON.stringify(habits));
+            renderHabits();
+            updateStats();
+        }
+
+        function renderHabits() {
+            const list = document.getElementById('habitList');
+            const userHabits = habits.filter(h => h.userEmail === currentUser.email);
+            const today = new Date().toDateString();
+
+            list.innerHTML = userHabits.map(h => `
+                <div class="habit-row">
+                    <span>${h.text}</span>
+                    <div class="habit-check ${h.lastDone === today ? 'done' : ''}" onclick="toggleHabit(${h.id})">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- NOTES ---
+        function addNote() {
+            Swal.fire({
+                title: 'Judul Catatan',
+                input: 'text',
+                showCancelButton: true
+            }).then(result => {
+                if (result.value) {
+                    notes.push({
+                        id: Date.now(),
+                        userEmail: currentUser.email,
+                        title: result.value,
+                        content: ''
+                    });
+                    localStorage.setItem('nf_notes', JSON.stringify(notes));
+                    renderNotes();
+                }
             });
         }
-    </script>
 
+        function updateNote(id, val) {
+            notes = notes.map(n => n.id === id ? {...n, content: val} : n);
+            localStorage.setItem('nf_notes', JSON.stringify(notes));
+        }
+
+        function deleteNote(id) {
+            notes = notes.filter(n => n.id !== id);
+            localStorage.setItem('nf_notes', JSON.stringify(notes));
+            renderNotes();
+        }
+
+        function renderNotes() {
+            const list = document.getElementById('noteList');
+            const userNotes = notes.filter(n => n.userEmail === currentUser.email);
+
+            list.innerHTML = userNotes.map(n => `
+                <div class="col-md-6">
+                    <div class="card-notion">
+                        <div class="d-flex justify-content-between mb-2">
+                            <h6 class="fw-bold mb-0">${n.title}</h6>
+                            <i class="bi bi-trash text-danger cursor-pointer" onclick="deleteNote(${n.id})" style="cursor:pointer"></i>
+                        </div>
+                        <textarea class="form-control border-0 bg-light p-2 small" rows="4" 
+                            placeholder="Tulis materi di sini..." onchange="updateNote(${n.id}, this.value)">${n.content}</textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- SCHEDULE ---
+        function addSchedule() {
+            const time = prompt("Waktu (contoh 08:00 - 10:00):");
+            const subject = prompt("Mata Kuliah / Materi:");
+            if (time && subject) {
+                schedule.push({ id: Date.now(), userEmail: currentUser.email, time, subject });
+                localStorage.setItem('nf_schedule', JSON.stringify(schedule));
+                renderSchedule();
+            }
+        }
+
+        function deleteSchedule(id) {
+            schedule = schedule.filter(s => s.id !== id);
+            localStorage.setItem('nf_schedule', JSON.stringify(schedule));
+            renderSchedule();
+        }
+
+        function renderSchedule() {
+            const table = document.getElementById('scheduleTable');
+            const userSched = schedule.filter(s => s.userEmail === currentUser.email);
+
+            table.innerHTML = userSched.map(s => `
+                <tr>
+                    <td>${s.time}</td>
+                    <td>${s.subject}</td>
+                    <td><i class="bi bi-x-circle text-danger" onclick="deleteSchedule(${s.id})" style="cursor:pointer"></i></td>
+                </tr>
+            `).join('');
+        }
+
+        // --- PROFILE ---
+        function updateProfile() {
+            const newName = document.getElementById('profName').value;
+            if (!newName) return;
+
+            currentUser.name = newName;
+            users = users.map(u => u.email === currentUser.email ? {...u, name: newName} : u);
+            
+            localStorage.setItem('nf_users', JSON.stringify(users));
+            localStorage.setItem('nf_session', JSON.stringify(currentUser));
+            
+            initApp();
+            Swal.fire('Sukses', 'Profil diperbarui!', 'success');
+        }
+
+        // --- STATS & UTILS ---
+        function updateStats() {
+            const userTasks = tasks.filter(t => t.userEmail === currentUser.email);
+            const total = userTasks.length;
+            const completed = userTasks.filter(t => t.completed).length;
+            const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+            document.getElementById('statsTaskPct').textContent = pct + '%';
+            document.getElementById('statsTaskBar').style.width = pct + '%';
+            document.getElementById('statsTaskCount').textContent = `${completed} dari ${total} tugas selesai`;
+
+            const today = new Date().toDateString();
+            const habitCount = habits.filter(h => h.userEmail === currentUser.email && h.lastDone === today).length;
+            document.getElementById('statsHabitCount').textContent = habitCount;
+
+            // Dashboard Notice
+            const urgent = userTasks.filter(t => !t.completed && t.prio === 'high');
+            document.getElementById('dashboardTaskNotice').innerHTML = urgent.length > 0 ? 
+                `<p class="text-danger small mb-0"><i class="bi bi-exclamation-triangle"></i> Ada ${urgent.length} tugas prioritas tinggi menunggu!</p>` : 
+                `<p class="text-success small mb-0"><i class="bi bi-check-circle"></i> Tidak ada tugas mendesak.</p>`;
+        }
+
+        function renderAll() {
+            renderTasks();
+            renderHabits();
+            renderNotes();
+            renderSchedule();
+            updateStats();
+        }
+
+        // AUTO LOGIN CHECK
+        window.onload = () => {
+            if (currentUser) {
+                initApp();
+            } else {
+                const rem = localStorage.getItem('nf_remember');
+                if (rem) {
+                    const u = users.find(x => x.email === rem);
+                    if (u) {
+                        currentUser = u;
+                        initApp();
+                    }
+                }
+            }
+        };
+
+        // SERVICE WORKER REGISTRATION (Simulasi PWA)
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', e => {
+                    e.waitUntil(caches.open('notion-v1').then(c => c.addAll(['/'])));
+                });
+                self.addEventListener('fetch', e => {
+                    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+                });
+            `;
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(swUrl).catch(err => console.log('SW failed', err));
+        }
+    </script>
 </body>
 
 </html>
