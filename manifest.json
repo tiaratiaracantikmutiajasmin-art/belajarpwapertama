@@ -15,25 +15,25 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "icons/icon-192x192-A.png",
+      "src": "icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-512x512-B.png",
+      "src": "icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-192x192-A.png",
+      "src": "icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "icons/icon-512x512-B.png",
+      "src": "icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -42,14 +42,14 @@
   "screenshots": [
     {
       "src": "icons/screenshot1.png",
-      "sizes": "1080x1920",
+      "sizes": "1442x3090",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Halaman utama aplikasi NotionFlow di tampilan mobile"
     },
     {
       "src": "icons/screenshot2.png",
-      "sizes": "1080x1920",
+      "sizes": "1442x3090",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Dashboard aplikasi NotionFlow di tampilan desktop"
@@ -63,7 +63,7 @@
       "url": "./index.html",
       "icons": [
         {
-          "src": "icons/icon-192x192-A.png",
+          "src": "icons/icon-192x192.png",
           "sizes": "192x192",
           "type": "image/png"
         }

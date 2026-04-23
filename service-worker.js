@@ -7,8 +7,8 @@ const urlsToCache = [
   "./offline.html",
   "./manifest.json",
   "./assets/style.css",
-  "./icons/icon-192x192-A.png",
-  "./icons/icon-512x512-B.png",
+  "./icons/icon-192x192.png",
+  "./icons/icon-512x512.png",
 ];
 
 // Install Service Worker & cache essential files
