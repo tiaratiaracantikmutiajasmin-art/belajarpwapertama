@@ -4,26 +4,31 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description"
+        content="NotionFlow - Aplikasi PWA produktivitas untuk mengelola tugas, kebiasaan, catatan, dan jadwal belajar. Tersedia offline dan bisa di-install.">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0d6efd" />
+    <meta name="apple-mobile-web-app-title" content="NotionFlow">
+    <meta name="theme-color" content="#4F46E5" />
     <link rel="manifest" href="manifest.json" />
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" type="image/png" />
-    
+    <link rel="icon" href="icons/icon-192x192-A.png" type="image/png" />
+    <link rel="apple-touch-icon" href="icons/icon-192x192-A.png" />
+
     <!-- Bootstrap 5 & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- Google Font Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <title>Notion Flow - Kelola Hidup Anda</title>
 
     <style>
         :root {
-            --primary: #0d6efd;
-            --primary-dark: #0a58ca;
-            --primary-light: #e7f1ff;
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --primary-light: #EEF2FF;
             --bg-body: #f4f7fe;
             --text-dark: #1e293b;
             --text-gray: #64748b;
@@ -66,8 +71,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* --- APP SECTION --- */
@@ -77,7 +89,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .logo-brand {
@@ -95,7 +107,7 @@
             border-radius: 15px;
             padding: 15px;
             height: fit-content;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .nav-link-custom {
@@ -110,7 +122,8 @@
             margin-bottom: 5px;
         }
 
-        .nav-link-custom:hover, .nav-link-custom.active {
+        .nav-link-custom:hover,
+        .nav-link-custom.active {
             background: var(--primary-light);
             color: var(--primary);
             font-weight: 600;
@@ -121,14 +134,14 @@
             border: none;
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
             transition: 0.3s;
         }
 
         .card-notion:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         }
 
         /* Progress Bar */
@@ -173,9 +186,17 @@
         }
 
         /* Task Priority Colors */
-        .prio-high { border-left: 5px solid var(--danger); }
-        .prio-medium { border-left: 5px solid var(--warning); }
-        .prio-low { border-left: 5px solid var(--success); }
+        .prio-high {
+            border-left: 5px solid var(--danger);
+        }
+
+        .prio-medium {
+            border-left: 5px solid var(--warning);
+        }
+
+        .prio-low {
+            border-left: 5px solid var(--success);
+        }
 
         .btn-primary {
             background-color: var(--primary);
@@ -191,13 +212,25 @@
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .sidebar-nav { margin-bottom: 20px; }
-            .header-content { text-align: center; }
+            .sidebar-nav {
+                margin-bottom: 20px;
+            }
+
+            .header-content {
+                text-align: center;
+            }
         }
     </style>
 </head>
 
 <body>
+    <noscript>
+        <div style="padding: 2rem; text-align: center; font-family: sans-serif;">
+            <h2>JavaScript Diperlukan</h2>
+            <p>Aplikasi NotionFlow membutuhkan JavaScript untuk berjalan. Silakan aktifkan JavaScript di pengaturan
+                browser Anda.</p>
+        </div>
+    </noscript>
 
     <!-- SECTION 1: AUTHENTICATION (LOGIN/REGISTER) -->
     <div id="authSection">
@@ -205,7 +238,7 @@
         <div id="loginForm" class="auth-card">
             <h3 class="fw-bold text-center mb-1">Notion Flow</h3>
             <p class="text-muted text-center mb-4">Masuk untuk mengelola tugasmu</p>
-            
+
             <div class="mb-3">
                 <label class="form-label small fw-bold">Email</label>
                 <input type="email" id="loginEmail" class="form-control" placeholder="nama@email.com">
@@ -222,14 +255,15 @@
                 <a href="#" onclick="forgotPassword()" class="small text-decoration-none">Lupa Password?</a>
             </div>
             <button class="btn btn-primary w-100 mb-3" onclick="handleLogin()">Login</button>
-            <p class="text-center small mb-0">Belum punya akun? <a href="#" onclick="toggleAuth(true)" class="text-decoration-none fw-bold">Daftar Sekarang</a></p>
+            <p class="text-center small mb-0">Belum punya akun? <a href="#" onclick="toggleAuth(true)"
+                    class="text-decoration-none fw-bold">Daftar Sekarang</a></p>
         </div>
 
         <!-- Register Form -->
         <div id="registerForm" class="auth-card" style="display: none;">
             <h3 class="fw-bold text-center mb-1">Daftar Akun</h3>
             <p class="text-muted text-center mb-4">Mulai hidup terstruktur hari ini</p>
-            
+
             <div class="mb-3">
                 <label class="form-label small fw-bold">Nama Lengkap</label>
                 <input type="text" id="regName" class="form-control">
@@ -243,7 +277,8 @@
                 <input type="password" id="regPassword" class="form-control">
             </div>
             <button class="btn btn-primary w-100 mb-3" onclick="handleRegister()">Daftar</button>
-            <p class="text-center small mb-0">Sudah punya akun? <a href="#" onclick="toggleAuth(false)" class="text-decoration-none fw-bold">Login</a></p>
+            <p class="text-center small mb-0">Sudah punya akun? <a href="#" onclick="toggleAuth(false)"
+                    class="text-decoration-none fw-bold">Login</a></p>
         </div>
     </div>
 
@@ -255,14 +290,20 @@
                     <i class="bi bi- cursor-fill"></i> NotionFlow
                 </a>
                 <div class="dropdown">
-                    <div class="d-flex align-items-center gap-2 cursor-pointer" data-bs-toggle="dropdown" style="cursor:pointer">
+                    <div class="d-flex align-items-center gap-2 cursor-pointer" data-bs-toggle="dropdown"
+                        style="cursor:pointer">
                         <span id="navUserName" class="fw-bold">User</span>
-                        <img src="https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff" id="userAvatar" class="rounded-circle" width="35">
+                        <img src="https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff" id="userAvatar"
+                            class="rounded-circle" width="35">
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-                        <li><a class="dropdown-item" href="#" onclick="showPage('profile')"><i class="bi bi-person me-2"></i>Profil</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#" onclick="handleLogout()"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="showPage('profile')"><i
+                                    class="bi bi-person me-2"></i>Profil</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="#" onclick="handleLogout()"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
                     </ul>
                 </div>
             </div>
@@ -273,17 +314,22 @@
                 <!-- Sidebar Nav -->
                 <div class="col-lg-3">
                     <nav class="sidebar-nav mb-4">
-                        <a href="#" class="nav-link-custom active" onclick="showPage('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                        <a href="#" class="nav-link-custom" onclick="showPage('tasks')"><i class="bi bi-check2-square"></i> Tugas & Deadline</a>
-                        <a href="#" class="nav-link-custom" onclick="showPage('habits')"><i class="bi bi-calendar-check"></i> Habit Tracker</a>
-                        <a href="#" class="nav-link-custom" onclick="showPage('notes')"><i class="bi bi-journal-text"></i> Catatan Materi</a>
-                        <a href="#" class="nav-link-custom" onclick="showPage('schedule')"><i class="bi bi-clock-history"></i> Jadwal Belajar</a>
+                        <a href="#" class="nav-link-custom active" onclick="showPage('dashboard')"><i
+                                class="bi bi-speedometer2"></i> Dashboard</a>
+                        <a href="#" class="nav-link-custom" onclick="showPage('tasks')"><i
+                                class="bi bi-check2-square"></i> Tugas & Deadline</a>
+                        <a href="#" class="nav-link-custom" onclick="showPage('habits')"><i
+                                class="bi bi-calendar-check"></i> Habit Tracker</a>
+                        <a href="#" class="nav-link-custom" onclick="showPage('notes')"><i
+                                class="bi bi-journal-text"></i> Catatan Materi</a>
+                        <a href="#" class="nav-link-custom" onclick="showPage('schedule')"><i
+                                class="bi bi-clock-history"></i> Jadwal Belajar</a>
                     </nav>
                 </div>
 
                 <!-- Main Content -->
                 <div class="col-lg-9">
-                    
+
                     <!-- Dashboard Page -->
                     <div id="page-dashboard" class="page-content">
                         <h4 class="fw-bold mb-4">Ringkasan Hari Ini</h4>
@@ -316,7 +362,8 @@
                     <div id="page-tasks" class="page-content" style="display:none">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h4 class="fw-bold">Tugas & Deadline</h4>
-                            <button class="btn btn-primary btn-sm" onclick="openTaskModal()"><i class="bi bi-plus-lg"></i> Tambah</button>
+                            <button class="btn btn-primary btn-sm" onclick="openTaskModal()"><i
+                                    class="bi bi-plus-lg"></i> Tambah</button>
                         </div>
                         <div id="taskList"></div>
                     </div>
@@ -337,7 +384,8 @@
                     <div id="page-notes" class="page-content" style="display:none">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h4 class="fw-bold">Catatan Materi</h4>
-                            <button class="btn btn-primary btn-sm" onclick="addNote()"><i class="bi bi-plus-lg"></i> Catatan Baru</button>
+                            <button class="btn btn-primary btn-sm" onclick="addNote()"><i class="bi bi-plus-lg"></i>
+                                Catatan Baru</button>
                         </div>
                         <div id="noteList" class="row g-3"></div>
                     </div>
@@ -358,7 +406,8 @@
                                     <tbody id="scheduleTable"></tbody>
                                 </table>
                             </div>
-                            <button class="btn btn-outline-primary btn-sm w-100" onclick="addSchedule()">+ Tambah Jadwal</button>
+                            <button class="btn btn-outline-primary btn-sm w-100" onclick="addSchedule()">+ Tambah
+                                Jadwal</button>
                         </div>
                     </div>
 
@@ -425,7 +474,7 @@
         /** --- GLOBAL STATE & STORAGE --- **/
         let users = JSON.parse(localStorage.getItem('nf_users')) || [];
         let currentUser = JSON.parse(localStorage.getItem('nf_session')) || null;
-        
+
         // Data Arrays
         let tasks = JSON.parse(localStorage.getItem('nf_tasks')) || [];
         let habits = JSON.parse(localStorage.getItem('nf_habits')) || [];
@@ -504,14 +553,14 @@
             document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${currentUser.name}&background=0d6efd&color=fff`;
             document.getElementById('profName').value = currentUser.name;
             document.getElementById('profEmail').value = currentUser.email;
-            
+
             renderAll();
         }
 
         function showPage(pageId) {
             document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
             document.getElementById(`page-${pageId}`).style.display = 'block';
-            
+
             document.querySelectorAll('.nav-link-custom').forEach(l => l.classList.remove('active'));
             event.currentTarget.classList.add('active');
         }
@@ -542,7 +591,7 @@
         }
 
         function toggleTask(id) {
-            tasks = tasks.map(t => t.id === id ? {...t, completed: !t.completed} : t);
+            tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
             localStorage.setItem('nf_tasks', JSON.stringify(tasks));
             renderTasks();
             updateStats();
@@ -558,7 +607,7 @@
         function renderTasks() {
             const list = document.getElementById('taskList');
             const userTasks = tasks.filter(t => t.userEmail === currentUser.email);
-            
+
             if (userTasks.length === 0) {
                 list.innerHTML = `<div class="text-center p-5 text-muted">Belum ada tugas.</div>`;
                 return;
@@ -649,7 +698,7 @@
         }
 
         function updateNote(id, val) {
-            notes = notes.map(n => n.id === id ? {...n, content: val} : n);
+            notes = notes.map(n => n.id === id ? { ...n, content: val } : n);
             localStorage.setItem('nf_notes', JSON.stringify(notes));
         }
 
@@ -713,11 +762,11 @@
             if (!newName) return;
 
             currentUser.name = newName;
-            users = users.map(u => u.email === currentUser.email ? {...u, name: newName} : u);
-            
+            users = users.map(u => u.email === currentUser.email ? { ...u, name: newName } : u);
+
             localStorage.setItem('nf_users', JSON.stringify(users));
             localStorage.setItem('nf_session', JSON.stringify(currentUser));
-            
+
             initApp();
             Swal.fire('Sukses', 'Profil diperbarui!', 'success');
         }
@@ -739,8 +788,8 @@
 
             // Dashboard Notice
             const urgent = userTasks.filter(t => !t.completed && t.prio === 'high');
-            document.getElementById('dashboardTaskNotice').innerHTML = urgent.length > 0 ? 
-                `<p class="text-danger small mb-0"><i class="bi bi-exclamation-triangle"></i> Ada ${urgent.length} tugas prioritas tinggi menunggu!</p>` : 
+            document.getElementById('dashboardTaskNotice').innerHTML = urgent.length > 0 ?
+                `<p class="text-danger small mb-0"><i class="bi bi-exclamation-triangle"></i> Ada ${urgent.length} tugas prioritas tinggi menunggu!</p>` :
                 `<p class="text-success small mb-0"><i class="bi bi-check-circle"></i> Tidak ada tugas mendesak.</p>`;
         }
 
@@ -768,19 +817,15 @@
             }
         };
 
-        // SERVICE WORKER REGISTRATION (Simulasi PWA)
+        // SERVICE WORKER REGISTRATION
         if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('install', e => {
-                    e.waitUntil(caches.open('notion-v1').then(c => c.addAll(['/'])));
+            navigator.serviceWorker.register('./service-worker.js')
+                .then((registration) => {
+                    console.log('[App] Service Worker terdaftar dengan scope:', registration.scope);
+                })
+                .catch((err) => {
+                    console.error('[App] Service Worker gagal didaftarkan:', err);
                 });
-                self.addEventListener('fetch', e => {
-                    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
-                });
-            `;
-            const blob = new Blob([swCode], { type: 'application/javascript' });
-            const swUrl = URL.createObjectURL(blob);
-            navigator.serviceWorker.register(swUrl).catch(err => console.log('SW failed', err));
         }
     </script>
 </body>
